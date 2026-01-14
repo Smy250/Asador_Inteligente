@@ -91,12 +91,14 @@ const PointOfSale = (): React.JSX.Element => {
 
           <div className="flex justify-center gap-2 mb-8">
             <button
+              type="button"
               onClick={() => setActiveTab('comida')}
               className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all ${activeTab === 'comida' ? 'bg-red-600 text-white shadow-lg' : 'bg-white text-gray-400 border'}`}
             >
               <Utensils size={18} /> Comida
             </button>
             <button
+              type="button"
               onClick={() => setActiveTab('bebidas')}
               className={`flex items-center gap-2 px-8 py-3 rounded-xl font-bold transition-all ${activeTab === 'bebidas' ? 'bg-red-600 text-white shadow-lg' : 'bg-white text-gray-400 border'}`}
             >
@@ -107,6 +109,7 @@ const PointOfSale = (): React.JSX.Element => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {productos[activeTab].map((prod) => (
               <button
+                type="button"
                 key={prod.id}
                 onClick={() => agregarAlCarrito(prod)}
                 className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:border-red-200 transition-all flex flex-col items-center"
@@ -148,6 +151,8 @@ const PointOfSale = (): React.JSX.Element => {
                     </div>
                     <div className="flex items-center gap-3 ml-4 bg-gray-50 p-1 rounded-xl">
                       <button
+                        title="modificar"
+                        type="button"
                         onClick={() => modificarCantidad(item.id, -1)}
                         className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:bg-white hover:text-red-500 transition-all"
                       >
@@ -155,6 +160,8 @@ const PointOfSale = (): React.JSX.Element => {
                       </button>
                       <span className="font-black text-sm">{item.cantidad}</span>
                       <button
+                        title="cantidad"
+                        type="button"
                         onClick={() => modificarCantidad(item.id, 1)}
                         className="w-8 h-8 rounded-lg flex items-center justify-center text-red-500 hover:bg-white transition-all"
                       >
@@ -180,6 +187,7 @@ const PointOfSale = (): React.JSX.Element => {
               <div className="grid grid-cols-3 gap-3">
                 {['efectivo', 'tarjeta', 'transfer'].map((m) => (
                   <button
+                    type="button"
                     key={m}
                     onClick={() => setMetodoPago(m)}
                     className={`flex flex-col items-center justify-center py-4 rounded-2xl border-2 transition-all ${metodoPago === m ? 'border-red-500 bg-red-50 text-red-600 shadow-sm' : 'border-gray-50 text-gray-400'}`}
@@ -200,6 +208,7 @@ const PointOfSale = (): React.JSX.Element => {
             </div>
 
             <button
+              type="button"
               onClick={finalizarVenta}
               disabled={carrito.length === 0}
               className="w-full bg-red-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-red-700 active:scale-[0.98] transition-all disabled:opacity-30 shadow-xl shadow-red-100"

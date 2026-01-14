@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PointOfSale from './components/PointOfSale'
 import SideBar from './components/Sidebar'
+import StockManagement from './components/StockManagement'
 
 function App(): React.JSX.Element {
   // El estado de la navegación principal vive aquí
@@ -14,12 +15,27 @@ function App(): React.JSX.Element {
         {/* Renderizado condicional de las vistas */}
         {currentView === 'pos' && <PointOfSale />}
 
-        {currentView === 'stock' && (
+        {/* Vistas próximamente disponibles */}
+        {[/* 'stock', */ 'ia', 'resources'].includes(currentView) && (
           <div className="p-20 text-center font-bold text-gray-400">
-            Próximamente: Gestión de Stock
+            Próximamente:{' '}
+            {(() => {
+              switch (currentView) {
+                /*                 case 'stock':
+                  return 'Gestión de Stock' */
+                case 'ia':
+                  return 'Funcionalidades de IA'
+                case 'resources':
+                  return 'Gestión de Recursos'
+                default:
+                  return ''
+              }
+            })()}
           </div>
         )}
+
         {/* Agrega aquí las demás vistas según el ID */}
+        {currentView === 'stock' && <StockManagement />}
       </main>
     </div>
   )
