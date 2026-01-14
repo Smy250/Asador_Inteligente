@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/purity */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
 import {
   Utensils,
@@ -11,11 +13,26 @@ import {
   Smartphone
 } from 'lucide-react'
 
+interface Shoping {
+  id: string
+  nombre: string
+  precio: number
+  cantidad: number
+}
+
+interface Venta {
+  id: number
+  items: Shoping[]
+  total: number
+  metodo: string
+  hora: string
+}
+
 const PointOfSale = (): React.JSX.Element => {
   const [activeTab, setActiveTab] = useState('comida')
-  const [carrito, setCarrito] = useState([])
+  const [carrito, setCarrito] = useState<Shoping[]>([])
   const [metodoPago, setMetodoPago] = useState('efectivo')
-  const [ventasRealizadas, setVentasRealizadas] = useState([])
+  const [ventasRealizadas, setVentasRealizadas] = useState<Venta[]>([])
 
   const productos = {
     comida: [
@@ -36,7 +53,7 @@ const PointOfSale = (): React.JSX.Element => {
     ]
   }
 
-  const agregarAlCarrito = (producto) => {
+  const agregarAlCarrito = (producto): any => {
     setCarrito((prev) => {
       const existe = prev.find((item) => item.id === producto.id)
       if (existe) {
@@ -48,7 +65,7 @@ const PointOfSale = (): React.JSX.Element => {
     })
   }
 
-  const modificarCantidad = (id, delta) => {
+  const modificarCantidad = (id, delta): void => {
     setCarrito((prev) =>
       prev
         .map((item) => {
@@ -64,7 +81,7 @@ const PointOfSale = (): React.JSX.Element => {
 
   const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0)
 
-  const finalizarVenta = () => {
+  const finalizarVenta = (): void => {
     if (carrito.length === 0) return
 
     const nuevaVenta = {
@@ -129,12 +146,12 @@ const PointOfSale = (): React.JSX.Element => {
         </div>
 
         {/* PANEL DERECHO: CARRITO Y VENTAS */}
-        <div className="w-full lg:w-[400px] flex flex-col gap-6">
+        <div className="w-full lg:w-100 flex flex-col gap-6">
           {/* SECCIÓN CARRITO */}
-          <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-4xl p-8 shadow-sm border border-gray-100">
             <h2 className="font-bold text-xl mb-6">Carrito Actual</h2>
 
-            <div className="space-y-6 mb-8 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-6 mb-8 max-h-62.5 overflow-y-auto pr-2 custom-scrollbar">
               {carrito.length === 0 ? (
                 <div className="py-10 text-center text-gray-300 flex flex-col items-center">
                   <ShoppingBag size={40} className="opacity-20 mb-2" />
@@ -218,14 +235,14 @@ const PointOfSale = (): React.JSX.Element => {
           </div>
 
           {/* SECCIÓN VENTAS DE HOY CON SCROLL */}
-          <div className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 flex flex-col">
+          <div className="bg-white rounded-4xl p-6 shadow-sm border border-gray-100 flex flex-col">
             <div className="flex items-center gap-2 mb-4">
               <Clock size={18} className="text-gray-400" />
               <h2 className="font-bold text-gray-700">Ventas de Hoy</h2>
             </div>
 
             {/* Contenedor con Scroll */}
-            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-3 max-h-75 overflow-y-auto pr-2 custom-scrollbar">
               {ventasRealizadas.length === 0 ? (
                 <div className="text-center py-8 text-gray-300 text-sm font-medium">
                   Sin ventas registradas hoy
